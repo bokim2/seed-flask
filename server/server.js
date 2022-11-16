@@ -22,8 +22,11 @@ const db = require("./db/index.js");
 const app = express();
 // const apiRouter = require('./routes.api');
 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.resolve(__dirname, '../client')));
 // app.use(cors());
 
 //GET all flasks
@@ -81,7 +84,7 @@ app.post("/api/flasks", async(req, res)=>{
 app.put("/api/flasks/:id", async(req, res)=>{
   try{
     let date = new Date()
-    const results = await db.query("UPDATE flasks SET cell_bank=$1, inoculum_uL=$2, media_mL=$3, end_date=$4, completed=$5 WHERE id=$6 returning *", [req.body.cell_bank, req.body.inoculum_uL, req.body.media_mL, date, req.body.completed, req.params.id]);
+    const results = await db.query("UPDATE flasks SET cell_bank=$1, inoculum_ul=$2, media_ml=$3, end_date=$4, completed=$5, od600=$6 WHERE id=$7 returning *", [req.body.cell_bank, req.body.inoculum_ul, req.body.media_ml, date, req.body.completed, req.body.od600, req.params.id]);
     console.log(results);
     res.status(200).json({
       status: "success",
@@ -110,7 +113,7 @@ app.delete("/api/flasks/:id", async(req, res)=>{
 
 
 
-app.use(express.static(path.resolve(__dirname, '../client')));
+
 
 //define route handlers
 // app.use('/api', apiRouter);

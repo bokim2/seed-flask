@@ -16,3 +16,5 @@ drop table flasks;      deletes table
 INSERT INTO flasks (cell_bank, inoculum_uL, media_mL) values (111111, 50, 250);
 
 SELECT * FROM flasks;  see all of flasks
+
+ALTER TABLE flasks ADD COLUMN OD600 REAL;

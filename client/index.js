@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { App } from './components/App.jsx';
 
 const container = document.getElementById('root');
+import styles from './stylesheets/styles.css';
 
 // Create a root.
 const root = ReactDOMClient.createRoot(container);
