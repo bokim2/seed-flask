@@ -1,0 +1,18 @@
+CREATE DATABASE flasks
+
+CREATE TABLE flasks (
+id BIGSERIAL NOT NULL PRIMARY KEY,
+cell_bank INT NOT NULL, 
+inoculum_uL REAL, 
+media_mL REAL, 
+start_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+end_date timestamp,
+completed BOOLEAN
+);
+
+drop table flasks;      deletes table
+\c flasks;           connect to a new database
+
+INSERT INTO flasks (cell_bank, inoculum_uL, media_mL) values (111111, 50, 250);
+
+SELECT * FROM flasks;  see all of flasks
