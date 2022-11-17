@@ -32,12 +32,8 @@ function AddFlask() {
         //   console.log(data)
         }
         postFlask()
-        .catch(console.err)
-       
-        // .catch(err){console.err}
-        // return data;
-        
-
+        .catch(console.log('error in post server adding flask'))
+ 
     }
 
     let date = new Date();

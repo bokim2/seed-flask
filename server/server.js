@@ -87,6 +87,7 @@ app.post("/api/flasks", async(req, res)=>{
 //UPDATE a flask
 app.put("/api/flasks/:id", async(req, res)=>{
   try{
+    console.log('in update flask server')
     let date = new Date()
     const results = await db.query("UPDATE flasks SET cell_bank=$1, inoculum_ul=$2, media_ml=$3, end_date=$4, completed=$5, od600=$6 WHERE id=$7 returning *", [req.body.cell_bank, req.body.inoculum_ul, req.body.media_ml, date, req.body.completed, req.body.od600, req.params.id]);
     console.log(results);
