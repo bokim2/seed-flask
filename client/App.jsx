@@ -11,7 +11,7 @@ import { FlasksContextProvider } from "./context/FlasksContext";
 
 function App() {
   return (
-    <>
+  
     <FlasksContextProvider>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <ul className="navbar-nav mr-auto">
@@ -27,7 +27,7 @@ function App() {
       </Routes>
     </FlasksContextProvider>
     
-  </>
+
   )
 }
 
