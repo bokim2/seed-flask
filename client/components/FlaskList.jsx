@@ -23,7 +23,7 @@ function FlaskList() {
             let data = await response.json()
             // console.log(data)
             setFlasks(data.data.flasks)
-            // console.log(data.data.flasks)
+            console.log(data.data.flasks)
             }
             fetchFlasks()
             .catch(console.err)
@@ -43,6 +43,7 @@ function FlaskList() {
                 <th scope="col">sample YY-MM-DD</th>
                 <th scope="col">completed</th>
                 <th scope="col">time elapsed hr</th>
+                <th scope="col">OD600</th>
             </tr>
           </thead>
 
@@ -60,6 +61,7 @@ function FlaskList() {
                                 <td className="text-center">{momentFormat(flask.end_date)}</td>
                                 <td className="text-center">{flask.completed}</td>
                                 <td className="text-center">{timeSince(flask.time_since_inoc)}</td>
+                                <td className="text-center">{flask.od600}</td>
                             </tr>
                         )
                     })
