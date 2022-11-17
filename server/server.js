@@ -36,7 +36,7 @@ app.use(cors());
 app.get("/api/flasks", async(req, res)=>{
   try{
     const results = await db.query("select * from flasks");
-    console.log(results);
+    // console.log(results);
     res.status(200).json({
       status: "success",
       results: results.rows.length,

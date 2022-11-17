@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import moment from 'moment';
 moment().format();
 import {momentFormat} from './FlaskList';
+import { FlasksContext } from '../context/FlasksContext'
 
 function AddFlask() {
 
     const [cell_bank, setCellBank] = useState("");
     const [inoculum_ul, setInoculum] = useState("");
     const [media_ml, setMedia] = useState("");
+    const {addFlasks} = useContext(FlasksContext);
 
     function handleSubmit(e) {
         console.log("entering handleSubmit?")
@@ -25,8 +27,9 @@ function AddFlask() {
                     media_ml,
                 })
             })
-          const data = await response.json()   
-          console.log(data)
+          const data = await response.json()  
+          addFlasks(data.data.flasks) 
+        //   console.log(data)
         }
         postFlask()
         .catch(console.err)
