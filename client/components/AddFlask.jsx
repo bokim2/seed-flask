@@ -9,7 +9,8 @@ function AddFlask() {
     const [cell_bank, setCellBank] = useState("");
     const [inoculum_ul, setInoculum] = useState("");
     const [media_ml, setMedia] = useState("");
-    const {addFlasks} = useContext(FlasksContext);
+    
+    const {flasks, addFlasks, setFlasks} = useContext(FlasksContext);
 
     function handleSubmit(e) {
         console.log("entering handleSubmit?")

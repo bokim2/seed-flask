@@ -24,7 +24,7 @@ function navigateFlask(e, id){
   // e.stopPropagation();    
   navigate(`/${id}`)
     }
-  
+
     useEffect(()=>{
             const fetchFlasks = async () => {
                 let response = await fetch("http://localhost:3000/api/flasks/")
@@ -36,7 +36,7 @@ function navigateFlask(e, id){
             fetchFlasks()
             .catch(console.err)
     },[])
-
+console.log('flasks inside', flasks)
   return (
     <div>
       <div className="list-group">

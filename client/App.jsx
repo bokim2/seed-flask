@@ -1,12 +1,14 @@
 
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import { Route, Routes, Link } from "react-router-dom"
 import React from 'react';
-import { BrowserRouter } from "react-router-dom";
+
 // import {createRoot} from 'react-dom/client';
 // import ReactDOM from 'react-dom';
 import Home from './routes/Home';
 import Sample from "./routes/Sample";
 import { FlasksContextProvider } from "./context/FlasksContext";
+import Data from "./routes/Data";
 
 // import './stylesheets/styles.css';
 
