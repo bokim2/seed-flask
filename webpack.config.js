@@ -18,6 +18,10 @@ module.exports = {
         template: 'index.html'
         })
     ],
+    resolve: {
+        // Enable importing JS / JSX files without specifying their extension
+        extensions: ['.js', '.jsx'],
+      },
     devServer: {
         host: 'localhost',
         port: 8080,

@@ -11,13 +11,16 @@
 //npm install express
 //npm install node-fetch
 // npm install react-router react-router-dom pg
+// npm install -D source-map-loader
+// npm install cors
+// npm install moment --save
 
 const path = require('path');
 const express = require('express');
 const db = require("./db/index.js");
 
 
-// const cors = require('cors')
+const cors = require('cors')
 // const morgan = require('morgan');
 const app = express();
 // const apiRouter = require('./routes.api');
@@ -27,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.resolve(__dirname, '../client')));
-// app.use(cors());
+app.use(cors());
 
 //GET all flasks
 app.get("/api/flasks", async(req, res)=>{
@@ -50,7 +53,7 @@ app.get("/api/flasks", async(req, res)=>{
 app.get("/api/flasks/:id", async(req, res)=>{
   try{
     const results = await db.query("select * from flasks WHERE id = $1", [req.params.id]);
-    console.log(results);
+    // console.log(results);
     res.status(200).json({
       status: "success",
       results: results.rows.length,
@@ -66,8 +69,9 @@ app.get("/api/flasks/:id", async(req, res)=>{
 //CREATE a flask
 app.post("/api/flasks", async(req, res)=>{
   try{
-    const results = await db.query("INSERT INTO flasks (cell_bank, inoculum_uL, media_mL) values ($1, $2, $3) returning *", [req.body.cell_bank, req.body.inoculum_uL, req.body.media_mL]);
-    console.log(results);
+    console.log('made it into create a flask server')
+    const results = await db.query("INSERT INTO flasks (cell_bank, inoculum_ul, media_ml) values ($1, $2, $3) returning *", [req.body.cell_bank, req.body.inoculum_ul, req.body.media_ml]);
+    console.log('create flask results', results);
     res.status(200).json({
       status: "success",
       results: results.rows.length,

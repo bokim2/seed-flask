@@ -1,21 +1,35 @@
-import ReactDOM from 'react-dom';
-import * as ReactDOMClient from 'react-dom/client';
-import React, { Component } from 'react';
-import { App } from './components/App.jsx';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import { BrowserRouter } from "react-router-dom"
 
-const container = document.getElementById('root');
 import styles from './stylesheets/styles.css';
 
 // Create a root.
-const root = ReactDOMClient.createRoot(container);
+const root = ReactDOM.createRoot(document.getElementById('root'));
 // Initial render
-root.render(<App />);
+root.render(
+    <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+    );
 
 
-//   render (
-//       <App />,
-//      document.getElementById('root')
-//   );
+///////////////////////////////////////////
+// import ReactDOM from 'react-dom';
+// import * as ReactDOMClient from 'react-dom/client';
+// import React, { Component } from 'react';
+// import { App } from './App.jsx';
+
+// const container = document.getElementById('root');
+// import styles from './stylesheets/styles.css';
+// // Create a root.
+// const root = ReactDOMClient.createRoot(container);
+// // Initial render
+// root.render(<App />);
 
 
+////////////////////////////////////////////////////
 
