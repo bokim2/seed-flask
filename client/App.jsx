@@ -23,7 +23,7 @@ function App() {
       
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/sample" element={<Sample />} />
+        <Route path="/:id" element={<Sample />} />
       </Routes>
     </FlasksContextProvider>
     

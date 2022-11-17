@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { FlasksContext } from '../context/FlasksContext'
 // import FlaskFinder from "../apis/FlaskFinder"
 import moment from 'moment';
+import { useNavigate } from 'react-router';
 moment().format();
 
 export function momentFormat(timestamp){
@@ -17,6 +18,12 @@ function timeSince (interval){
 
 function FlaskList() {
     const {flasks, setFlasks} = useContext(FlasksContext);
+    const navigate = useNavigate();
+
+function navigateFlask(e, id){
+  // e.stopPropagation();    
+  navigate(`/${id}`)
+    }
   
     useEffect(()=>{
             const fetchFlasks = async () => {
@@ -53,7 +60,7 @@ function FlaskList() {
                 {   flasks &&
                     flasks.map(flask => {
                         return (
-                            <tr key={flask.id}>
+                            <tr key={flask.id} value={flask.id} onClick={(e)=> navigateFlask(e, flask.id)}>
                                 <td className="text-center">{flask.id}</td>
                                 <td className="text-center">{flask.cell_bank}</td>
                                 <td className="text-center">{flask.inoculum_ul}</td>

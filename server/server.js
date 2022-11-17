@@ -53,7 +53,7 @@ app.get("/api/flasks", async(req, res)=>{
 app.get("/api/flasks/:id", async(req, res)=>{
   try{
     const results = await db.query("select * from flasks WHERE id = $1", [req.params.id]);
-    // console.log(results);
+    console.log('results of getting one flask', results.rows[0]);
     res.status(200).json({
       status: "success",
       results: results.rows.length,
