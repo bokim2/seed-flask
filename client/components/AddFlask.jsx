@@ -33,7 +33,17 @@ function AddFlask() {
         //   console.log(data)
         }
         postFlask()
-        .catch(console.log('error in post server adding flask'))
+        .catch(console.log('error in post server adding flask'));
+        
+        const fetchFlasks = async () => {
+            let response = await fetch("http://localhost:3000/api/flasks/")
+        let data = await response.json()
+        // console.log(data)
+        setFlasks(data.data.flasks)
+        // console.log('data.data.flasks', data.data.flasks)
+        }
+        fetchFlasks()
+        .catch(console.err)
  
     }
 

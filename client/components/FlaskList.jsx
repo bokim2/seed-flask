@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { FlasksContext } from '../context/FlasksContext'
 // import FlaskFinder from "../apis/FlaskFinder"
 import moment from 'moment';
@@ -19,11 +19,13 @@ function timeSince (interval){
 function FlaskList() {
     const {flasks, setFlasks} = useContext(FlasksContext);
     const navigate = useNavigate();
+    // const [strain, setStrain] = useState("")
 
 function navigateFlask(e, id){
-  // e.stopPropagation();    
+  // e.stopPropagation();
+  // setStrain(flask.strain)    
   navigate(`/${id}`)
-    }
+}
 
     useEffect(()=>{
             const fetchFlasks = async () => {
@@ -36,7 +38,7 @@ function navigateFlask(e, id){
             fetchFlasks()
             .catch(console.err)
     },[])
-console.log('flasks inside', flasks)
+// console.log('flasks inside', flasks)
   return (
     <div>
       <div className="list-group">
