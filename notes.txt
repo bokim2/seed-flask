@@ -25,3 +25,17 @@ ADDED CALCULATED COLUMN!!!!!
 ALTER TABLE "flasks"
 ADD COLUMN "time_since_inoc" INTERVAL 
 GENERATED ALWAYS AS ("end_date"-"start_date") STORED;
+
+CREATE TABLE cell_bank (
+    cell_bank INT NOT NULL,
+    strain VARCHAR(50),
+    notes TEXT 
+);
+
+INSERT INTO cell_bank (cell_bank, strain, notes) values (3, 'CD-5024', 'target od 1-3');
+INSERT INTO cell_bank (cell_bank, strain, notes) values (1, 'CD-0014', 'target od 1-3');
+INSERT INTO cell_bank (cell_bank, strain, notes) values (111115, 'CD-0088', 'target od 1-3');
+
+
+**joining both tables
+SELECT * FROM flasks LEFT JOIN cell_bank ON cell_bank=cell_bank.id; 

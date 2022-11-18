@@ -42,16 +42,17 @@ console.log('flasks inside', flasks)
       <div className="list-group">
         <table className="table table-hover table-dark">
           <thead>
-            <tr className="bg-primary">
-                <th scope="col">flask id</th>
-                <th scope="col">cell bank</th>
-                <th scope="col">inoculum uL</th>
-                <th scope="col">media mL</th>
-                <th scope="col">start YY-MM-DD</th>
-                <th scope="col">sample YY-MM-DD</th>
-                <th scope="col">completed</th>
-                <th scope="col">time elapsed hr</th>
-                <th scope="col">OD600</th>
+            <tr className="bg-primary table-warning">
+                <th className="text-center" scope="col">flask id</th>
+                <th className="text-center" scope="col">cell bank</th>
+                <th className="text-center" scope="col">inoculum uL</th>
+                <th className="text-center" scope="col">media mL</th>
+                <th className="text-center" scope="col">start YY-MM-DD</th>
+                <th className="text-center" scope="col">sample YY-MM-DD</th>
+                <th className="text-center" scope="col">completed</th>
+                <th className="text-center" scope="col">time elapsed hr</th>
+                <th className="text-center" scope="col">OD600</th>
+                <th className="text-center table-primary" scope="col">strain</th>
             </tr>
           </thead>
 
@@ -70,6 +71,7 @@ console.log('flasks inside', flasks)
                                 <td className="text-center">{flask.completed}</td>
                                 <td className="text-center">{timeSince(flask.time_since_inoc)}</td>
                                 <td className="text-center">{flask.od600}</td>
+                                <td className="text-center table-light">{flask.strain}</td>
                             </tr>
                         )
                     })

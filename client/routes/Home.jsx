@@ -13,7 +13,7 @@ function Home() {
 },[])
 
   return (
-    <div>
+    <div className="mainDiv">
       <Header />
       <AddFlask />
       <FlaskList />

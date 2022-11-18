@@ -35,8 +35,8 @@ app.use(cors());
 //GET all flasks
 app.get("/api/flasks", async(req, res)=>{
   try{
-    const results = await db.query("select * from flasks");
-    // console.log(results);
+    const results = await db.query("SELECT * FROM flasks  LEFT OUTER JOIN cell_bank ON flasks.cell_bank=cell_bank.cell_bank");
+    console.log(results);
     res.status(200).json({
       status: "success",
       results: results.rows.length,

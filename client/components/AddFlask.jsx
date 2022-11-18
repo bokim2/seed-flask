@@ -7,8 +7,8 @@ import { FlasksContext } from '../context/FlasksContext'
 function AddFlask() {
 
     const [cell_bank, setCellBank] = useState("");
-    const [inoculum_ul, setInoculum] = useState("");
-    const [media_ml, setMedia] = useState("");
+    const [inoculum_ul, setInoculum] = useState(50);
+    const [media_ml, setMedia] = useState(250);
     
     const {flasks, addFlasks, setFlasks} = useContext(FlasksContext);
 
@@ -54,7 +54,7 @@ function AddFlask() {
                 <div className="col">
                 start date  <input type="text"   className="form-control" placeholder={momentFormat(date)}/>
                 </div>
-                <button onClick={handleSubmit} type="submit" className="btn btn-primary mt-4">Submit</button>
+                <button onClick={handleSubmit} type="submit" className="btn btn-primary mt-4 ">Submit</button>
             </div>
         </form>
       

@@ -89,8 +89,8 @@ function handleDelete(e) {
   // console.log(id)
   return (
   
-    <div>
-      update {id}
+    <div className="updateFlask">
+      <div className="updateFlaskId"><h4>Update - Flask Id: {id}</h4></div>
       <form action="">
         <div className="form-group">
           <label htmlFor="cell_bank">cellbank</label>
@@ -104,9 +104,14 @@ function handleDelete(e) {
           <label htmlFor="od600">OD600</label>
           <input id="od600" value={od600} onChange={e=> setod600(e.target.value)} className="form-control" type="text"></input>
         </div>
-        <button type="submit" onClick={handleSubmit} className="btn btn-primary m-4">Submit</button>
+       <div className="d-grid gap-2 ">
+        <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-lg m-5">Submit</button>
+      </div>
+
       </form>
-      <button type="submit" onClick={handleDelete} className="btn btn-danger m-4 ">Delete</button>
+      <div className="d-grid gap-2 col-6 mx-auto ">
+      <button type="submit" onClick={handleDelete} className="btn btn-danger btn-lg m-5 ">Delete</button>
+      </div>
     </div>
   )
 }
