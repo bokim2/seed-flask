@@ -1,14 +1,41 @@
 CREATE DATABASE flasks
 
 CREATE TABLE flasks (
-id BIGSERIAL NOT NULL PRIMARY KEY,
-cell_bank INT NOT NULL, 
-inoculum_uL REAL, 
-media_mL REAL, 
-start_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-end_date timestamp,
-completed BOOLEAN
+"id" BIGSERIAL NOT NULL PRIMARY KEY,
+"cell_bank" INT NOT NULL, 
+"inoculum_uL" REAL, 
+"media_mL REAL", 
+"start_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"end_date" timestamp,
+"completed" BOOLEAN,
+"OD600" REAL,
+"time_since_inoc" INTERVAL 
+GENERATED ALWAYS AS ("end_date"-"start_date") STORED
 );
+
+
+
+/////////////////////////
+thought about splitting up the tables, but kind of lazy so won't.  
+CREATE TABLE flasks (
+"id" BIGSERIAL NOT NULL PRIMARY KEY,
+"cell_bank" INT NOT NULL, 
+"inoculum_uL" REAL, 
+"media_mL" REAL, 
+"start_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+);
+
+CREATE TABLE samples (
+"sample_id" BIGSERIAL NOT NULL PRIMARY KEY,
+"FOREIGN KEY" (start_date) REFERENCES flasks(start_date)
+"end_date" timestamp,
+"od600" REAL,
+"completed" BOOLEAN,
+"time_since_inoc" INTERVAL 
+GENERATED ALWAYS AS ("end_date"-"start_date") STORED
+FOREIGN KEY (flask_id) REFERENCES flasks(id)
+);
+/////////////////////////////////////////////
 
 drop table flasks;      deletes table
 \c flasks;           connect to a new database

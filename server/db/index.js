@@ -1,11 +1,12 @@
 const { Pool } = require('pg')
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'flasks',
-  password: 'Clover33@',
-  port: 5432,
-})
+require('dotenv').config();
+
+// create a new pool here using the connection string above
+const pool = new Pool({ connectionString: process.env.PG_URI });
+
 module.exports = {
-  query: (text, params) => pool.query(text, params),
-}
+  query: (text, params, callback) => {
+    // console.log('executed query', text);
+    return pool.query(text, params, callback);
+  },
+};

@@ -56,7 +56,7 @@ const flasksprops = {
 
   return (
     <div className="barchartdiv" >
-   
+    <h3>OD600 vs Time Elapsed (hr)</h3>
     <Bar className="barchart" data={flasksprops} options={{
       title: {
         display: true,

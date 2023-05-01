@@ -12,29 +12,36 @@ function AddFlask() {
     
     const {flasks, addFlasks, setFlasks} = useContext(FlasksContext);
 
-    function handleSubmit(e) {
+    const handleSubmit = async (e) => {
+        try {
         console.log("entering handleSubmit?")
         console.log('cell_bank,inoculum_ul,media_ml', cell_bank, inoculum_ul,media_ml)
         e.preventDefault();
+
         async function postFlask (){
+        try {
             const response = await fetch('http://localhost:3000/api/flasks/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    cell_bank,
-                    inoculum_ul,
-                    media_ml,
-                })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cell_bank,
+                inoculum_ul,
+                media_ml,
             })
-          const data = await response.json()  
-          addFlasks(data.data.flasks) 
-        //   console.log(data)
+        })
+        const data = await response.json()  
+        addFlasks(data.data.flasks) 
+    //   console.log( Flasks in addFlask, data.data.flasks)
+        } catch (err){
+            console.log(err)
         }
-        postFlask()
-        .catch(console.log('error in post server adding flask'));
-        
+        }
+
+        await postFlask()
+        // .catch(console.log('error in post server adding flask'));
+
         const fetchFlasks = async () => {
             let response = await fetch("http://localhost:3000/api/flasks/")
         let data = await response.json()
@@ -42,9 +49,10 @@ function AddFlask() {
         setFlasks(data.data.flasks)
         // console.log('data.data.flasks', data.data.flasks)
         }
-        fetchFlasks()
-        .catch(console.err)
- 
+        await fetchFlasks()
+    } catch(error){
+        console.log(error)
+    }
     }
 
     let date = new Date();
@@ -61,9 +69,9 @@ function AddFlask() {
                 <div className="col">
                 media mL   <input type="text" value={media_ml} onChange={e=> setMedia(e.target.value)} className="form-control" placeholder="250"/>
                 </div>
-                <div className="col">
+               {/* <div className="col">
                 start date  <input type="text"   className="form-control" placeholder={momentFormat(date)}/>
-                </div>
+                </div> */}
                 <button onClick={handleSubmit} type="submit" className="btn btn-primary mt-4 ">Submit</button>
             </div>
         </form>

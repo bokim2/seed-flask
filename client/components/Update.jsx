@@ -1,6 +1,10 @@
 import React,{ useState, useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { FlasksContext } from '../context/FlasksContext' 
+import { GraphByFlask } from './GraphByFlask';
+import { momentFormat, momentInterval } from './FlaskList' 
+import moment from 'moment';
+moment().format();
 
 function Update(props) {
   const {id} = useParams();
@@ -9,21 +13,48 @@ function Update(props) {
   const [cellBank, setCellBank] = useState("");
   const [od600, setod600] = useState("");
   const [deleted, setDeleted] = useState("");
+  const [inoc, setinoc] = useState("");
+  const [inoculum_ul, setInoculum] = useState(50);
+  const [media_ml, setMedia] = useState(250);
+  const [start_date, setStartDate] = useState("");
+  const [flasks_id, setFlasksId] = useState([]);
+  const [interval, setInterval] = useState(0);
+  
   
   useEffect(()=>{
     const fetchFlasks = async () => {
         let response = await fetch(`http://localhost:3000/api/flasks/${id}`)
-    let data = await response.json()
-    // console.log(data)
-    
-    console.log('data.data.flasks', data.data.flasks, 'id', id)
-    // console.log('data.data.flasks[id]', data.data.flasks[id])
-    // setFlasks(data.data.flasks)
-    setCellBank(data.data.flasks.cell_bank)
-    setod600(data.data.flasks.od600)
-    // console.log('data.data.flasks', data.data.flasks)
+      let data = await response.json()
+      // console.log(data)
+      
+      console.log('data.data.flasks', data.data.flasks, 'id', id)
+      // console.log('data.data.flasks[id]', data.data.flasks[id])
+      // setFlasks(data.data.flasks)
+      setCellBank(data.data.flasks.cell_bank)
+      setod600(data.data.flasks.od600)
+      setInoculum(data.data.flasks.inoculum_ul)
+      setMedia(data.data.flasks.media_ml)
+      setStartDate(data.data.flasks.start_date)
+      console.log('update flask data.data.flasks', data.data.flasks)
+      let int = moment().diff(moment(data.data.flasks.start_date), 'hours')
+      console.log('int', int)
+      setInterval(int)
     }
+
+  const fetchAll = async () => {
+    let response = await fetch(`http://localhost:3000/api/flasksall/${id}`)
+    let data = await response.json()
+
+    setFlasksId(data.data.flasks)
+    // console.log('fetchAll data.data.flasks', data.data.flasks, 'id', id)
+    // // console.log('data.data.flasks[id]', data.data.flasks[id])
+    // setFlasks(data.data.flasks)
+    
+    // console.log('update flask data.data.flasks', data.data.flasks)
+  }
+
     fetchFlasks()
+    fetchAll()
     .catch(console.err)
 },[])
 
@@ -42,26 +73,37 @@ navigate(`/${id}`)
       }
 /////////////
 
-function handleSubmit(e) {
+async function handleSubmit(e) {
   console.log("entering handleSubmit?")
+  console.log('id in handlesubmit', id)
   // console.log('cell_bank,inoculum_ul,media_ml', cell_bank, inoculum_ul,media_ml)
   e.preventDefault();
+  const date = new Date();
+  // console.log('date', date, 'start_date', start_date)
+  // const time_since_inoc = date - start_date;
+  // console.log('time_since_inoc', time_since_inoc)
+  console.log('handlesubmit, start_date', start_date)
+  console.log('interval in handlesubmit', interval)
   async function postFlask (){
       const response = await fetch(`http://localhost:3000/api/flasks/${id}`, {
-          method: 'PUT',
+          method: 'POST',
           headers: {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-              cell_bank: cellBank,
               od600,
+              completed: false,
+              end_date: date,
+              time_since_inoc: interval,
+              flask_id: id,
           })
       })
     // const data = await response.json()  
     // setFlasks(data.data.flasks) 
     // console.log('submit update flask', data)
   }
-  postFlask()
+  await postFlask()
+  
   .catch(err => console.log('error in post server adding flask'))
   navigateFlaskHome()
 
@@ -112,7 +154,9 @@ function handleDelete(e) {
       <div className="d-grid gap-2 col-6 mx-auto ">
       <button type="submit" onClick={handleDelete} className="btn btn-danger btn-lg m-5 ">Delete</button>
       </div>
+      <GraphByFlask id={id} flasks_id={flasks_id}/>
     </div>
+    
   )
 }
 

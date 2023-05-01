@@ -4,15 +4,38 @@ import { FlasksContext } from '../context/FlasksContext'
 import moment from 'moment';
 import { useNavigate } from 'react-router';
 moment().format();
+import { v4 as uuid } from 'uuid';
 
 export function momentFormat(timestamp){
-    if(!timestamp){ return "" } else {return moment(timestamp).format('YY-MM-DD, h:mm:ss a')}
+    if(!timestamp){ return "" } else {return moment(timestamp).format('YYYY-MM-DD, h:mm:ss a')}
+}
+
+export function momentInterval(end_date, start_date){
+  let a = moment(end_date);//now
+  // console.log('end_date', end_date)
+  // if (end_date){
+  //   // let a = moment()
+  //   let b = moment(new Date());
+  // } else {
+  //   let a = moment(end_date);
+  // }
+  let b = moment(start_date);
+  // console.log('b', b)
+  // console.log(a.diff(b, 'minutes')) // 44700
+  // console.log("a.diff(b, 'hours')", a.diff(b, 'hours')) // 745
+  let time_elapsed = a.diff(b, 'hours')
+  if (isNaN(time_elapsed)){
+    time_elapsed = moment().diff(b, 'hours')
+  }
+  return time_elapsed
+  // console.log(a.diff(b, 'days')) // 31
+  // console.log(a.diff(b, 'weeks')) // 4
 }
 
 function timeSince (interval){
     if(!interval) return ""
     // console.log(interval)
-    return  interval.days || (interval.hours && interval.hours) 
+    return  interval.days ||  interval.hours || 0
     // || (interval.min && interval.min + " min")
 }
 
@@ -33,7 +56,7 @@ function navigateFlask(e, id){
             let data = await response.json()
             // console.log(data)
             setFlasks(data.data.flasks)
-            // console.log('data.data.flasks', data.data.flasks)
+            console.log('data.data.flasks useEffect FlaskList', data.data.flasks)
             }
             fetchFlasks()
             .catch(console.err)
@@ -49,8 +72,8 @@ function navigateFlask(e, id){
                 <th className="text-center" scope="col">cell bank</th>
                 <th className="text-center" scope="col">inoculum uL</th>
                 <th className="text-center" scope="col">media mL</th>
-                <th className="text-center" scope="col">start YY-MM-DD</th>
-                <th className="text-center" scope="col">sample YY-MM-DD</th>
+                <th className="text-center" scope="col">start YYYY-MM-DD</th>
+                <th className="text-center" scope="col">sample YYYY-MM-DD</th>
                 <th className="text-center" scope="col">completed</th>
                 <th className="text-center" scope="col">time elapsed hr</th>
                 <th className="text-center" scope="col">OD600</th>
@@ -63,7 +86,7 @@ function navigateFlask(e, id){
                 {   flasks &&
                     flasks.map(flask => {
                         return (
-                            <tr key={flask.id} value={flask.id} onClick={(e)=> navigateFlask(e, flask.id)}>
+                            <tr key={uuid()} value={flask.id} onClick={(e)=> navigateFlask(e, flask.id)}>
                                 <td className="text-center">{flask.id}</td>
                                 <td className="text-center">{flask.cell_bank}</td>
                                 <td className="text-center">{flask.inoculum_ul}</td>
@@ -71,7 +94,8 @@ function navigateFlask(e, id){
                                 <td className="text-center">{momentFormat(flask.start_date)}</td>
                                 <td className="text-center">{momentFormat(flask.end_date)}</td>
                                 <td className="text-center">{flask.completed}</td>
-                                <td className="text-center">{timeSince(flask.time_since_inoc)}</td>
+                                <td className="text-center">{flask.time_since_inoc
+                                }</td>
                                 <td className="text-center">{flask.od600}</td>
                                 <td className="text-center table-light">{flask.strain}</td>
                             </tr>
