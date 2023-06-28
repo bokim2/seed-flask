@@ -19,7 +19,7 @@ function App() {
       <nav className="navbar navbar-expand-lg navbar-light bg-light ">
         <ul className="navbar-nav float-end">
           <li className="nav-link"><Link to="/">Home</Link></li>
-          <li className="nav-link"><Link to="/sample">Sample</Link></li>
+          {/* <li className="nav-link"><Link to="/sample">Sample</Link></li> */}
           <li className="nav-link"><Link to="/data">Data</Link></li>
         </ul>
       </nav>
