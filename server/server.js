@@ -20,7 +20,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
-const db = require("./db/index.js");
+const db = require("./db/db.js");
 
 // const morgan = require('morgan');
 const app = express();
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan('dev'));
 
-app.use(express.static(path.resolve(__dirname, '../client')));
+app.use(express.static(path.resolve(__dirname, '../build/')));
 
 //GET all flasks and join table - new
 app.get("/api/flasksall/:id", async(req, res)=>{
@@ -206,6 +206,9 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/'))
+})
 
-app.listen(3000); //listens on port 3000 -> http://localhost:3000/
-// modules.exports = app;
+// START SERVER
+app.listen(4000, console.log('server listening on port 4000'))

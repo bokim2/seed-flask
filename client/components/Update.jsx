@@ -2,7 +2,8 @@ import React,{ useState, useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { FlasksContext } from '../context/FlasksContext' 
 import { GraphByFlask } from './GraphByFlask';
-import { momentFormat, momentInterval } from './FlaskList' 
+import { momentFormat, momentInterval, fetchFlasks } from './FlaskList' 
+import axios from 'axios';
 import moment from 'moment';
 moment().format();
 
@@ -22,27 +23,27 @@ function Update(props) {
   
   
   useEffect(()=>{
-    const fetchFlasks = async () => {
-        let response = await fetch(`http://localhost:3000/api/flasks/${id}`)
-      let data = await response.json()
+    const fetchFlasksall = async () => {
+        const { data: res } = await axios(`http://localhost:4000/api/flasks/${id}`)
+      // let data = await response.json()
       // console.log(data)
       
-      console.log('data.data.flasks', data.data.flasks, 'id', id)
+      // console.log('data.data.flasks', data.data.flasks, 'id', id)
       // console.log('data.data.flasks[id]', data.data.flasks[id])
       // setFlasks(data.data.flasks)
-      setCellBank(data.data.flasks.cell_bank)
-      setod600(data.data.flasks.od600)
-      setInoculum(data.data.flasks.inoculum_ul)
-      setMedia(data.data.flasks.media_ml)
-      setStartDate(data.data.flasks.start_date)
-      console.log('update flask data.data.flasks', data.data.flasks)
-      let int = moment().diff(moment(data.data.flasks.start_date), 'hours')
+      setCellBank(res.data.flasks.cell_bank)
+      setod600(res.data.flasks.od600)
+      setInoculum(res.data.flasks.inoculum_ul)
+      setMedia(res.data.flasks.media_ml)
+      setStartDate(res.data.flasks.start_date)
+      // console.log('update flask data.data.flasks', data.data.flasks)
+      let int = moment().diff(moment(res.data.flasks.start_date), 'hours')
       console.log('int', int)
       setInterval(int)
     }
 
-  const fetchAll = async () => {
-    let response = await fetch(`http://localhost:3000/api/flasksall/${id}`)
+  const fetchJoinedFlask = async () => {
+    let response = await fetch(`http://localhost:4000/api/flasksall/${id}`)
     let data = await response.json()
 
     setFlasksId(data.data.flasks)
@@ -53,8 +54,8 @@ function Update(props) {
     // console.log('update flask data.data.flasks', data.data.flasks)
   }
 
-    fetchFlasks()
-    fetchAll()
+    fetchFlasksall()
+    fetchJoinedFlask()
     .catch(console.err)
 },[])
 
@@ -84,20 +85,38 @@ async function handleSubmit(e) {
   // console.log('time_since_inoc', time_since_inoc)
   console.log('handlesubmit, start_date', start_date)
   console.log('interval in handlesubmit', interval)
+  
   async function postFlask (){
-      const response = await fetch(`http://localhost:3000/api/flasks/${id}`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              od600,
-              completed: false,
-              end_date: date,
-              time_since_inoc: interval,
-              flask_id: id,
-          })
-      })
+
+
+    // const response = await fetch(`http://localhost:4000/api/flasks/${id}`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         od600,
+    //         completed: false,
+    //         end_date: date,
+    //         time_since_inoc: interval,
+    //         flask_id: id,
+    //     })
+    // }
+    
+    // )
+
+    const response = await axios.post(
+      process.env.NODE_ENV === 'production' 
+      ? `api/flasks/${id}`
+      : `http://localhost:4000/api/flasks/${id}`,
+        {
+          od600,
+          completed: false,
+          end_date: date,
+          time_since_inoc: interval,
+          flask_id: id,
+        }
+    )
     // const data = await response.json()  
     // setFlasks(data.data.flasks) 
     // console.log('submit update flask', data)
@@ -115,7 +134,7 @@ function handleDelete(e) {
   e.preventDefault();
   
   async function postFlask (){
-      const response = await fetch(`http://localhost:3000/api/flasks/${id}`, {
+      const response = await fetch(`http://localhost:4000/api/flasks/${id}`, {
           method: 'DELETE'
 
       })

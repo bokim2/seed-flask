@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import moment from 'moment';
 moment().format();
+import axios from 'axios'
 import {momentFormat} from './FlaskList';
 import { FlasksContext } from '../context/FlasksContext'
 
@@ -20,18 +21,31 @@ function AddFlask() {
 
         async function postFlask (){
         try {
-            const response = await fetch('http://localhost:3000/api/flasks/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                cell_bank,
-                inoculum_ul,
-                media_ml,
-            })
-        })
-        const data = await response.json()  
+
+        //   process.env.NODE_ENV === 'production'
+        //   ? `api/url/getUserURL/${user}/`
+        //   : `http://localhost:4000/api/url/getUserURL/${user}/`
+
+        //     const response = await fetch('http://localhost:4000/api/flasks/', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         cell_bank,
+        //         inoculum_ul,
+        //         media_ml,
+        //     })
+        // })
+
+        const data = await axios.post(
+          process.env.NODE_ENV === 'production'
+          ? `api/flasks`
+          : `http://localhost:4000/api/flasks/`,
+          cell_bank,
+          inoculum_ul,
+          media_ml,  
+        )
         addFlasks(data.data.flasks) 
     //   console.log( Flasks in addFlask, data.data.flasks)
         } catch (err){
@@ -43,10 +57,10 @@ function AddFlask() {
         // .catch(console.log('error in post server adding flask'));
 
         const fetchFlasks = async () => {
-            let response = await fetch("http://localhost:3000/api/flasks/")
-        let data = await response.json()
+            let { data: res } = await fetch("http://localhost:4000/api/flasks/")
+        // let data = await response.json()
         // console.log(data)
-        setFlasks(data.data.flasks)
+        setFlasks(res.data.flasks)
         // console.log('data.data.flasks', data.data.flasks)
         }
         await fetchFlasks()

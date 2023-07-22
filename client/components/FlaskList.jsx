@@ -5,62 +5,34 @@ import moment from 'moment';
 import { useNavigate } from 'react-router';
 moment().format();
 import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 
-export function momentFormat(timestamp){
-    if(!timestamp){ return "" } else {return moment(timestamp).format('YYYY-MM-DD, h:mm:ss a')}
-}
 
-export function momentInterval(end_date, start_date){
-  let a = moment(end_date);//now
-  // console.log('end_date', end_date)
-  // if (end_date){
-  //   // let a = moment()
-  //   let b = moment(new Date());
-  // } else {
-  //   let a = moment(end_date);
-  // }
-  let b = moment(start_date);
-  // console.log('b', b)
-  // console.log(a.diff(b, 'minutes')) // 44700
-  // console.log("a.diff(b, 'hours')", a.diff(b, 'hours')) // 745
-  let time_elapsed = a.diff(b, 'hours')
-  if (isNaN(time_elapsed)){
-    time_elapsed = moment().diff(b, 'hours')
-  }
-  return time_elapsed
-  // console.log(a.diff(b, 'days')) // 31
-  // console.log(a.diff(b, 'weeks')) // 4
-}
-
-function timeSince (interval){
-    if(!interval) return ""
-    // console.log(interval)
-    return  interval.days ||  interval.hours || 0
-    // || (interval.min && interval.min + " min")
-}
 
 function FlaskList() {
     const {flasks, setFlasks} = useContext(FlasksContext);
     const navigate = useNavigate();
     // const [strain, setStrain] = useState("")
 
-function navigateFlask(e, id){
-  // e.stopPropagation();
-  // setStrain(flask.strain)    
-  navigate(`/${id}`)
-}
-
-    useEffect(()=>{
-            const fetchFlasks = async () => {
-                let response = await fetch("http://localhost:3000/api/flasks/")
-            let data = await response.json()
-            // console.log(data)
-            setFlasks(data.data.flasks)
-            console.log('data.data.flasks useEffect FlaskList', data.data.flasks)
-            }
-            fetchFlasks()
-            .catch(console.err)
-    },[])
+    function navigateFlask(e, id){
+      // e.stopPropagation();
+      // setStrain(flask.strain)    
+      navigate(`/${id}`)
+    }
+  useEffect(()=>{
+    const fetchFlasks = async () => {
+      let { data: response } = await axios.get(
+        process.env.NODE_ENV === 'production' 
+        ? `api/flasks`
+        : `http://localhost:4000/api/flasks/`)
+    // let data = await response.json()
+    // console.log(data)
+    setFlasks(response.data.flasks)
+    // console.log('response.data.flasks useEffect FlaskList', response.data.flasks)
+    }
+    fetchFlasks()
+    .catch(console.err)
+  },[])
 // console.log('flasks inside', flasks)
   return (
     <div>
@@ -110,5 +82,51 @@ function navigateFlask(e, id){
     </div>
   )
 }
+
+export function momentFormat(timestamp){
+  if(!timestamp){ return "" } else {return moment(timestamp).format('YYYY-MM-DD, h:mm:ss a')}
+}
+
+export function momentInterval(end_date, start_date){
+let a = moment(end_date);//now
+// console.log('end_date', end_date)
+// if (end_date){
+//   // let a = moment()
+//   let b = moment(new Date());
+// } else {
+//   let a = moment(end_date);
+// }
+let b = moment(start_date);
+// console.log('b', b)
+// console.log(a.diff(b, 'minutes')) // 44700
+// console.log("a.diff(b, 'hours')", a.diff(b, 'hours')) // 745
+let time_elapsed = a.diff(b, 'hours')
+if (isNaN(time_elapsed)){
+  time_elapsed = moment().diff(b, 'hours')
+}
+return time_elapsed
+// console.log(a.diff(b, 'days')) // 31
+// console.log(a.diff(b, 'weeks')) // 4
+}
+
+export async function fetchFlasks() {
+let { data: response } = await axios.get(
+  process.env.NODE_ENV === 'production' 
+  ? `api/flasks`
+  : `http://localhost:4000/api/flasks/`)
+// let data = await response.json()
+// console.log(data)
+setFlasks(response.data.flasks)
+// console.log('response.data.flasks useEffect FlaskList', response.data.flasks)
+}
+
+function timeSince (interval){
+  if(!interval) return ""
+  // console.log(interval)
+  return  interval.days ||  interval.hours || 0
+  // || (interval.min && interval.min + " min")
+}
+
+
 
 export default FlaskList

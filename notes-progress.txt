@@ -1,0 +1,8 @@
+20217021
+
+- fixed webpack and package.json, tested production with docker.  fixed some urls to work for production.
+
+
+Next:
+- finish docker url production fix
+- figure out how to take out that rediscope icon on the tab.

@@ -21,7 +21,7 @@ function Data() {
   const navigate = useNavigate();
   useEffect(()=>{
     const fetchFlasks = async () => {
-        let response = await fetch("http://localhost:3000/api/flasks/")
+        let response = await fetch("http://localhost:4000/api/flasks/")
     let data = await response.json()
     // console.log(data)
     setFlasks(data.data.flasks)
