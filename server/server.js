@@ -39,7 +39,7 @@ app.get("/api/flasksall/:id", async(req, res)=>{
   try{
     const results = await db.query("SELECT * FROM flasks f full outer JOIN samples s ON f.id = s.flask_id LEFT JOIN cell_banks c ON f.cell_bank = c.cell_bank WHERE id = $1 ORDER BY f.id DESC ", [req.params.id]);
     // LEFT OUTER JOIN cell_bank ON flasks.cell_bank=cell_bank.cell_bank ORDER BY flasks.id
-    console.log(results);
+    // console.log(results);
     res.status(200).json({
       status: "success",
       results: results.rows.length,
@@ -57,7 +57,7 @@ app.get("/api/flasks", async(req, res)=>{
   try{
     const results = await db.query("SELECT * FROM flasks f full outer JOIN samples s ON f.id = s.flask_id LEFT JOIN cell_banks c ON f.cell_bank = c.cell_bank ORDER BY f.id DESC");
     // LEFT OUTER JOIN cell_bank ON flasks.cell_bank=cell_bank.cell_bank ORDER BY flasks.id
-    console.log(results);
+    // console.log(results);
     res.status(200).json({
       status: "success",
       results: results.rows.length,
