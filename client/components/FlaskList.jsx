@@ -25,10 +25,9 @@ function FlaskList() {
         process.env.NODE_ENV === 'production' 
         ? `api/flasks`
         : `http://localhost:4000/api/flasks/`)
-    // let data = await response.json()
-    // console.log(data)
+
     setFlasks(response.data.flasks)
-    // console.log('response.data.flasks useEffect FlaskList', response.data.flasks)
+
     }
     fetchFlasks()
     .catch(console.err)
