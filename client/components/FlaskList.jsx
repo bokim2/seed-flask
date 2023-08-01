@@ -1,11 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { FlasksContext } from '../context/FlasksContext'
 // import FlaskFinder from "../apis/FlaskFinder"
-import moment from 'moment'
+// import moment from 'moment'
 import { useNavigate } from 'react-router'
+const moment = require('moment-timezone');
 moment().format()
 import { v4 as uuid } from 'uuid'
 import axios from 'axios'
+
 
 function FlaskList() {
   const { flasks, setFlasks } = useContext(FlasksContext)
@@ -106,31 +108,34 @@ export function momentFormat(timestamp) {
   if (!timestamp) {
     return ''
   } else {
-    return moment(timestamp).format('YYYY-MM-DD, h:mm:ss a')
+    // console.log('timestamp raw from sql timepoint', timestamp)
+    const time = moment.tz(timestamp,'America/Los_Angeles').format('MM/DD/YYYY h:mm a');
+// console.log("time : ", time);
+    return moment.tz(time,'America/Los_Angeles').format('MM/DD/YYYY h:mm a')
   }
 }
 
-export function momentInterval(end_date, start_date) {
-  let a = moment(end_date) //now
-  // console.log('end_date', end_date)
-  // if (end_date){
-  //   // let a = moment()
-  //   let b = moment(new Date());
-  // } else {
-  //   let a = moment(end_date);
-  // }
-  let b = moment(start_date)
-  // console.log('b', b)
-  // console.log(a.diff(b, 'minutes')) // 44700
-  // console.log("a.diff(b, 'hours')", a.diff(b, 'hours')) // 745
-  let time_elapsed = a.diff(b, 'hours')
-  if (isNaN(time_elapsed)) {
-    time_elapsed = moment().diff(b, 'hours')
-  }
-  return time_elapsed
-  // console.log(a.diff(b, 'days')) // 31
-  // console.log(a.diff(b, 'weeks')) // 4
-}
+// export function momentInterval(end_date, start_date) {
+//   let a = moment(end_date) //now
+//   console.log('end_date', end_date)
+//   // if (end_date){
+//   //   // let a = moment()
+//   //   let b = moment(new Date());
+//   // } else {
+//   //   let a = moment(end_date);
+//   // }
+//   let b = moment(start_date)
+//   console.log('b', b)
+//   // console.log(a.diff(b, 'minutes')) // 44700
+//   // console.log("a.diff(b, 'hours')", a.diff(b, 'hours')) // 745
+//   let time_elapsed = a.diff(b, 'hours')
+//   if (isNaN(time_elapsed)) {
+//     time_elapsed = moment().diff(b, 'hours')
+//   }
+//   return time_elapsed
+//   // console.log(a.diff(b, 'days')) // 31
+//   // console.log(a.diff(b, 'weeks')) // 4
+// }
 
 export async function fetchFlasks() {
   let { data: response } = await axios.get(
