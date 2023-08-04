@@ -109,9 +109,16 @@ export function momentFormat(timestamp) {
     return ''
   } else {
     // console.log('timestamp raw from sql timepoint', timestamp)
-    const time = moment.tz(timestamp,'America/Los_Angeles').format('MM/DD/YYYY h:mm a');
+    const newtimestamp = new Date(timestamp)
+    // console.log(newtimestamp)
+    const time = moment.tz(newtimestamp,'America/Los_Angeles').format('MM/DD/YYYY h:mm a');
 // console.log("time : ", time);
-    return moment.tz(time,'America/Los_Angeles').format('MM/DD/YYYY h:mm a')
+   
+    if (process.env.NODE_ENV !== 'production'){
+      return moment.tz(time,'America/Los_Angeles').format('MM/DD/YYYY h:mm a')
+    } else {
+      return time
+    }
   }
 }
 
