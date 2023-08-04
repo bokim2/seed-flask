@@ -1,0 +1,41 @@
+CREATE DATABASE flasks
+
+CREATE TABLE flasks (
+id BIGSERIAL NOT NULL PRIMARY KEY,
+cell_bank INT NOT NULL, 
+inoculum_uL REAL, 
+media_mL REAL, 
+start_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+end_date timestamp,
+completed BOOLEAN
+);
+
+drop table flasks;      deletes table
+\c flasks;           connect to a new database
+
+INSERT INTO flasks (cell_bank, inoculum_uL, media_mL, od600) values (111111, 50, 250, 4.2);
+
+SELECT * FROM flasks;  see all of flasks
+
+ALTER TABLE flasks ADD COLUMN OD600 REAL;
+
+
+ADDED CALCULATED COLUMN!!!!!
+
+ALTER TABLE "flasks"
+ADD COLUMN "time_since_inoc" INTERVAL 
+GENERATED ALWAYS AS ("end_date"-"start_date") STORED;
+
+CREATE TABLE cell_bank (
+    cell_bank INT NOT NULL,
+    strain VARCHAR(50),
+    notes TEXT 
+);
+
+INSERT INTO cell_bank (cell_bank, strain, notes) values (3, 'CD-5024', 'target od 1-3');
+INSERT INTO cell_bank (cell_bank, strain, notes) values (1, 'CD-0014', 'target od 1-3');
+INSERT INTO cell_bank (cell_bank, strain, notes) values (111115, 'CD-0088', 'target od 1-3');
+
+
+**joining both tables
+SELECT * FROM flasks LEFT JOIN cell_bank ON cell_bank=cell_bank.id; 

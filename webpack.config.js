@@ -1,27 +1,54 @@
 //set module.exports to be object that hold all necessary config for webpack to properly access into bundle
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 module.exports = {
 
     //set the mode to be production
     //will create minified/uglified production bundle
-    mode: process.env.NODE_ENV, //does this need to be single quotes?
+    // mode: process.env.NODE_ENV, //does this need to be single quotes?
     entry: './client/index.js',
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.join(__dirname, '/build'),
         filename: 'bundle.js',
     },
     plugins: [
         new HtmlWebpackPlugin({
-        title: 'Development',
-        template: 'index.html'
+        template: './public/index.html'
         })
     ],
-    resolve: {
-        // Enable importing JS / JSX files without specifying their extension
-        extensions: ['.js', '.jsx'],
-      },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react']
+                    }
+                }
+            },
+            {
+                test: /.(css|scss)$/,
+                exclude: /node_modules/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                  {
+                    loader: 'file-loader',
+                  },
+                ],
+            }
+        ]
+    },
     devServer: {
         host: 'localhost',
         port: 8080,
@@ -31,31 +58,12 @@ module.exports = {
           publicPath: '/'
         },
         proxy: {
-            '/api': 'http://localhost:3000'
+            '/api': 'http://localhost:4000'
         }
       },
-    module: {
-        rules: [
-            {
-                test: /\.jsx?/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                    presets: ['@babel/preset-env', '@babel/preset-react'],
-                    }
-                }
-            }, {
-                test: /.(css|scss)$/,
-                exclude: /node_modules/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ]
-            }
-        ]
-    }
-
+    resolve: {
+        // Enable importing JS / JSX files without specifying their extension
+        extensions: ['.tsx', '.ts', '.jsx', '.js'],
+      },
 
 };

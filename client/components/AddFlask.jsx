@@ -16,8 +16,9 @@ function AddFlask() {
         console.log("entering handleSubmit?")
         console.log('cell_bank,inoculum_ul,media_ml', cell_bank, inoculum_ul,media_ml)
         e.preventDefault();
+        
         async function postFlask (){
-            const response = await fetch('http://localhost:3000/api/flasks/', {
+            const response = await fetch('http://localhost:4000/api/flasks/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -32,11 +33,12 @@ function AddFlask() {
           addFlasks(data.data.flasks) 
         //   console.log(data)
         }
+        
         postFlask()
         .catch(console.log('error in post server adding flask'));
         
         const fetchFlasks = async () => {
-            let response = await fetch("http://localhost:3000/api/flasks/")
+            let response = await fetch("http://localhost:4000/api/flasks/")
         let data = await response.json()
         // console.log(data)
         setFlasks(data.data.flasks)
