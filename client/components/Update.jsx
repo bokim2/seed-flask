@@ -33,14 +33,9 @@ function Update(props) {
       setInoculum(res.data.flasks.inoculum_ul)
       setMedia(res.data.flasks.media_ml)
       setStartDate(res.data.flasks.start_date)
-      // console.log('update flask data.data.flasks', data.data.flasks)
-      // console.log('start_date when updating flask', res.data.flasks.start_date)
-      let inter = moment().diff(
-        momentFormat(res.data.flasks.start_date),
-        'hours',
-      )
-      console.log('inter', inter)
-      inter = inter + moment().diff(momentFormat(res.data.flasks.start_date), 'minutes')/60
+
+      let inter =
+        moment().diff(momentFormat(res.data.flasks.start_date), 'minutes') / 60
       console.log('inter', inter)
       setTimepointInterval(inter.toFixed(2))
     }
@@ -52,15 +47,8 @@ function Update(props) {
           ? `api/flasksall/${id}`
           : `http://localhost:4000/api/flasksall/${id}`,
       )
-      
-      // let data = await response.json()
 
       setFlasksId(res.data.flasks)
-      // console.log('fetchAll data.data.flasks', data.data.flasks, 'id', id)
-      // // console.log('data.data.flasks[id]', data.data.flasks[id])
-      // setFlasks(data.data.flasks)
-
-      // console.log('update flask data.data.flasks', data.data.flasks)
     }
 
     fetchFlasksall()
