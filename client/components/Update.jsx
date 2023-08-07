@@ -161,7 +161,7 @@ function Update(props) {
           <label htmlFor="od600">OD600</label>
           <input
             id="od600"
-            value={od600 || ''}
+            value={od600 ?? ''}
             onChange={e => setod600(e.target.value)}
             className="form-control"
             type="text"
