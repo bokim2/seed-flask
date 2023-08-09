@@ -140,14 +140,14 @@ function Update(props) {
   return (
     <div className="updateFlask">
       <div className="updateFlaskId">
-        <h4>Update - Flask Id: {id}</h4>
+        <h4>Update - Flask Id: {id || 0}</h4>
       </div>
       <form action="">
         <div className="form-group">
           <label htmlFor="cell_bank">cellbank</label>
           <input
             id="cell_bank"
-            value={cellBank}
+            value={cellBank || 0} 
             onChange={e => setCellBank(e.target.value)}
             className="form-control"
             type="text"
@@ -161,7 +161,7 @@ function Update(props) {
           <label htmlFor="od600">OD600</label>
           <input
             id="od600"
-            value={od600}
+            value={od600 ?? ''}
             onChange={e => setod600(e.target.value)}
             className="form-control"
             type="text"
