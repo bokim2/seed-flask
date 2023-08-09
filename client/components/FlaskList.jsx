@@ -3,11 +3,10 @@ import { FlasksContext } from '../context/FlasksContext'
 // import FlaskFinder from "../apis/FlaskFinder"
 // import moment from 'moment'
 import { useNavigate } from 'react-router'
-const moment = require('moment-timezone');
+const moment = require('moment-timezone')
 moment().format()
 import { v4 as uuid } from 'uuid'
 import axios from 'axios'
-
 
 function FlaskList() {
   const { flasks, setFlasks } = useContext(FlasksContext)
@@ -31,7 +30,7 @@ function FlaskList() {
     }
     fetchFlasks().catch(console.err)
   }, [])
-  // console.log('flasks inside', flasks)
+
   return (
     <div>
       <div className="list-group">
@@ -111,11 +110,13 @@ export function momentFormat(timestamp) {
     // console.log('timestamp raw from sql timepoint', timestamp)
     const newtimestamp = new Date(timestamp)
     // console.log(newtimestamp)
-    const time = moment.tz(newtimestamp,'America/Los_Angeles').format('MM/DD/YYYY h:mm a');
-// console.log("time : ", time);
-   
-    if (process.env.NODE_ENV !== 'production'){
-      return moment.tz(time,'America/Los_Angeles').format('MM/DD/YYYY h:mm a')
+    const time = moment
+      .tz(newtimestamp, 'America/Los_Angeles')
+      .format('MM/DD/YYYY h:mm a')
+    // console.log("time : ", time);
+
+    if (process.env.NODE_ENV !== 'production') {
+      return moment.tz(time, 'America/Los_Angeles').format('MM/DD/YYYY h:mm a')
     } else {
       return time
     }

@@ -75,9 +75,6 @@ function Update(props) {
     // console.log('cell_bank,inoculum_ul,media_ml', cell_bank, inoculum_ul,media_ml)
     e.preventDefault()
     const date = new Date()
-    // console.log('date', date, 'start_date', start_date)
-    // const time_since_inoc = date - start_date;
-    // console.log('time_since_inoc', time_since_inoc)
     console.log('handlesubmit, start_date', start_date)
     console.log('interval in handlesubmit', timepoint_interval)
 
