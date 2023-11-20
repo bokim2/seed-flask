@@ -1,0 +1,11 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "flasks",
+      "connectString": "postgres://saozqicw:5MD8AqcuZHxtFJIf0mVNok8FyAijHNss@mahmud.db.elephantsql.com/saozqicw"
+    }
+  ]
+}
