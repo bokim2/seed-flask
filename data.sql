@@ -1,5 +1,3 @@
-
-
 -- NOTES FROM BEFORE
 
 CREATE TABLE flasks (
@@ -35,7 +33,46 @@ FOREIGN KEY (flask_id) REFERENCES flasks(id)
 
 
 INSERT INTO cell_banks (cell_bank, strain, notes) values (3, 'CD-5024', 'target od 1-3');
-INSERT INTO cell_banks (cell_bank, strain, notes) values (1, 'CD-0014', 'target od 1-3'); 
+INSERT INTO cell_banks (cell_bank, strain, notes) values (1, 'CD-0014', 'target od 1-3');
+
+
+-- ACTUAL LIVE  data table structure taken out of the data table extension itself
+INSERT INTO flasks (id, inoculum_ul, media_ml, start_date, cell_bank)
+VALUES (
+    'id:bigint',
+    inoculum_ul:real,
+    media_ml:real,
+    'start_date:timestamp without time zone',
+    cell_bank:integer
+  );
+
+INSERT INTO cell_banks (cell_bank, strain, notes)
+VALUES (
+    'cell_bank:bigint',
+    'strain:character varying',
+    'notes:text'
+  );
+
+INSERT INTO samples (
+    sample_id,
+    end_date,
+    od600,
+    completed,
+    time_since_inoc,
+    flask_id
+  )
+VALUES (
+    'sample_id:bigint',
+    'end_date:timestamp without time zone',
+    od600:real,
+    completed:boolean,
+    time_since_inoc:real,
+    flask_id:integer
+  );
+
+
+
+
 -- notes for myself:  
 -- - gave up on trying to duplicate start_time column in samples table
 -- - now time_since_inoc has to be calculated by hand, it will not do it on its own.  
